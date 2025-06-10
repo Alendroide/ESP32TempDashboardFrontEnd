@@ -28,7 +28,7 @@ export default function useCO() {
 
     client.on("connect", () => {
       console.log("✅ Conectado a MQTT");
-      client.subscribe("pepe/esp32/co2");
+      client.subscribe("pepe/esp32/aire");
     });
 
     client.on("message", (topic, message) => {
