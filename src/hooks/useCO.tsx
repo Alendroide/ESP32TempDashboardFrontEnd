@@ -36,7 +36,7 @@ export default function useCO() {
         console.log(topic);
         const payload = JSON.parse(message.toString());
 
-        const co = payload.co;
+        const co = payload.airQuality;
         const createdAt = new Date().toISOString();
 
         setCurrentCO(co);
