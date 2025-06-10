@@ -42,6 +42,7 @@ export default function TempChart({data} : {data : any}){
           }
         },
         ticks: {
+          maxTicksLimit: 5,
           callback: (value) => {
             const date = new Date(Number(value));
             return format(date, 'ss') + ' seg.';

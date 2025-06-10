@@ -44,7 +44,7 @@ export default function useCO() {
         dataRef.current.labels.push(createdAt);
         dataRef.current.data.push(co);
 
-        if (dataRef.current.labels.length > 20) {
+        if (dataRef.current.labels.length > 10) {
           dataRef.current.labels.shift();
           dataRef.current.data.shift();
         }

@@ -44,7 +44,7 @@ export default function useTemp() {
         dataRef.current.labels.push(createdAt);
         dataRef.current.data.push(degrees);
 
-        if (dataRef.current.labels.length > 20) {
+        if (dataRef.current.labels.length > 10) {
           dataRef.current.labels.shift();
           dataRef.current.data.shift();
         }
