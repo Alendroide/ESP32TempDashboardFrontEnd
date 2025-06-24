@@ -36,7 +36,11 @@ export default function ReportForm() {
       scrollY: -window.scrollY,
     });
     const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF();
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "px",
+      format: [987, 700],
+    });
 
     const imgProps = pdf.getImageProperties(imgData);
     const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -51,6 +55,7 @@ export default function ReportForm() {
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="outside" size="5xl" >
         <ModalContent>
           <Report
+            ref={reportRef}
             {...data}
             from={tempFrom}
             to={tempTo}
