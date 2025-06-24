@@ -1,17 +1,20 @@
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { forwardRef } from "react";
+import ReportLineChart from "../molecules/ReportLineChart";
 
 interface ReportCardProps {
   temperature: {
     average: number;
     min: number;
     max: number;
+    samples: any
   },
   air: {
     average: number;
     min: number;
     max: number;
+    samples: any
   }
   from: string; // ISO string
   to: string;   // ISO string
@@ -52,39 +55,53 @@ const Report = forwardRef<HTMLDivElement, ReportCardProps>(({ temperature, air, 
         <div className="w-1/2">
           <p className="text-md text-center font-semibold mb-6">Temperatura</p>
           <div className="flex">
-            <div className="flex flex-col w-[70px] h-[242px] overflow-hidden gap-4">
-              <div className="bg-blue-100 text-blue-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
-                <span className="text-xs uppercase font-semibold">Promedio</span>
-                <span className="text-sm font-bold">{temperature.average.toFixed(2)}°C</span>
+            <div className="w-full">
+              
+              <div className="w-full">
+                <ReportLineChart label="Temperatura C°" samples={temperature.samples} type="temp" />
               </div>
-              <div className="bg-green-100 text-green-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
-                <span className="text-xs uppercase font-semibold">Mínimo</span>
-                <span className="text-sm font-bold">{temperature.min.toFixed(2)}°C</span>
-              </div>
-              <div className="bg-red-100 text-red-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
-                <span className="text-xs uppercase font-semibold">Máximo</span>
-                <span className="text-sm font-bold">{temperature.max.toFixed(2)}°C</span>
+
+              <div className="flex justify-center gap-4 my-4">
+                <div className="bg-blue-100 px-4 text-blue-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
+                  <span className="text-xs uppercase font-semibold">Promedio</span>
+                  <span className="text-sm font-bold">{temperature.average.toFixed(2)}°C</span>
+                </div>
+                <div className="bg-green-100 px-4 text-green-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
+                  <span className="text-xs uppercase font-semibold">Mínimo</span>
+                  <span className="text-sm font-bold">{temperature.min.toFixed(2)}°C</span>
+                </div>
+                <div className="bg-red-100 px-4 text-red-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
+                  <span className="text-xs uppercase font-semibold">Máximo</span>
+                  <span className="text-sm font-bold">{temperature.max.toFixed(2)}°C</span>
+                </div>
               </div>
             </div>
             </div>
           </div>
 
-        {/* INFORME TEMPERATURA */}
+        {/* INFORME GAS */}
         <div className="w-1/2">
-          <p className="text-md text-center font-semibold mb-6">Gas</p>
+          <p className="text-md text-center font-semibold mb-6">Concentración CO2</p>
           <div className="flex">
-            <div className="flex flex-col w-[90px] h-[242px] overflow-hidden gap-4">
-              <div className="bg-blue-100 text-blue-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
-                <span className="text-xs uppercase font-semibold">Promedio</span>
-                <span className="text-sm font-bold">{air.average.toFixed(2)} ppm</span>
+            <div className="w-full">
+              
+              <div className="w-full">
+                <ReportLineChart label="CO2 ppm" samples={air.samples}/>
               </div>
-              <div className="bg-green-100 text-green-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
-                <span className="text-xs uppercase font-semibold">Mínimo</span>
-                <span className="text-sm font-bold">{air.min.toFixed(2)} ppm</span>
-              </div>
-              <div className="bg-red-100 text-red-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
-                <span className="text-xs uppercase font-semibold">Máximo</span>
-                <span className="text-sm font-bold">{air.max.toFixed(2)} ppm</span>
+
+              <div className="flex justify-center gap-4 my-4">
+                <div className="bg-blue-100 px-4 text-blue-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
+                  <span className="text-xs uppercase font-semibold">Promedio</span>
+                  <span className="text-sm font-bold">{air.average.toFixed(2)} ppm</span>
+                </div>
+                <div className="bg-green-100 px-4 text-green-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
+                  <span className="text-xs uppercase font-semibold">Mínimo</span>
+                  <span className="text-sm font-bold">{air.min.toFixed(2)} ppm</span>
+                </div>
+                <div className="bg-red-100 px-4 text-red-800 rounded-xl py-2 shadow-sm flex flex-col items-center">
+                  <span className="text-xs uppercase font-semibold">Máximo</span>
+                  <span className="text-sm font-bold">{air.max.toFixed(2)} ppm</span>
+                </div>
               </div>
             </div>
             </div>
