@@ -1,5 +1,3 @@
-import DefaultLayout from "@/layouts/DefaultLayout";
-
 import TempChart from "@/components/molecules/TempChart";
 import useTemp from "@/hooks/useTemp";
 import COChart from "@/components/molecules/COChart";
@@ -13,7 +11,7 @@ export default function IndexPage() {
   const { currentCO, chartData : chartDataCO } = useCO();
 
   return (
-    <DefaultLayout>
+    <>
       <div className="flex gap-6">
         
         <div className="w-full md:w-1/2 flex flex-col justify-center items-center">
@@ -35,6 +33,6 @@ export default function IndexPage() {
         </div>
 
       </div>
-    </DefaultLayout>
+    </>
   );
 }

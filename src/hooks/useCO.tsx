@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import mqtt from "mqtt";
 import { ChartData } from "chart.js";
+import { axiosAPI } from "@/api/axiosAPI";
+import { useQuery } from "@tanstack/react-query";
 
 export default function useCO() {
 
@@ -71,5 +73,24 @@ export default function useCO() {
     };
   }, []);
 
-  return {chartData, currentCO};
+    const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  async function getAllGases() {
+    try{
+      const response = await axiosAPI.get(`air/?page=${page}`);
+      setTotalPages(response.data.pagination.totalPages);
+      return response.data.data;
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  const {data: allGases, isLoading, isError, error} = useQuery({
+    queryKey: ['allGases', page],
+    queryFn: getAllGases
+  })
+
+  return {chartData, currentCO, allGases, isLoading, isError, error, setPage, totalPages, setTotalPages, page};
 }

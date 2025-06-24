@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import mqtt from "mqtt";
 import { ChartData } from "chart.js";
+import { useQuery } from "@tanstack/react-query";
+import { axiosAPI } from "@/api/axiosAPI";
 
 export default function useTemp() {
 
@@ -33,7 +35,6 @@ export default function useTemp() {
 
     client.on("message", (topic, message) => {
       try {
-        console.log(topic);
         const payload = JSON.parse(message.toString());
 
         const degrees = payload.degrees;
@@ -61,6 +62,7 @@ export default function useTemp() {
             },
           ],
         });
+        return topic;
       } catch (err) {
         console.error("❌ Error al procesar mensaje MQTT", err);
       }
@@ -71,5 +73,24 @@ export default function useTemp() {
     };
   }, []);
 
-  return {chartData, currentTemperature};
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  async function getAllTemps() {
+    try{
+      const response = await axiosAPI.get(`temperature/?page=${page}`);
+      setTotalPages(response.data.pagination.totalPages);
+      return response.data.data;
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  const {data: allTemps, isLoading, isError, error} = useQuery({
+    queryKey: ['allTemps', page],
+    queryFn: getAllTemps
+  })
+
+  return {chartData, currentTemperature, allTemps, isLoading, isError, error, setPage, totalPages};
 }
