@@ -91,5 +91,15 @@ export default function useCO() {
     queryFn: getAllGases
   })
 
-  return {chartData, currentCO, allGases, isLoading, isError, error, setPage, totalPages, setTotalPages, page};
+  async function getStats(from: string, to: string){
+    try{
+      const response = await axiosAPI.get(`temperature/stats/?from=${from}&to=${to}`);
+      return response.data;
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  return {chartData, currentCO, allGases, isLoading, isError, error, setPage, totalPages, setTotalPages, page, getStats};
 }

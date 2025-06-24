@@ -1,6 +1,7 @@
 import TempsTable from "@/components/organisms/temp/TempsTable";
 import TempReportForm from "@/components/organisms/temp/TempReportForm";
 import GasesTable from "@/components/organisms/gas/GasesTable";
+import GasReportForm from "@/components/organisms/gas/GasReportForm";
 
 export default function ReportPage() {
   return (
@@ -13,6 +14,8 @@ export default function ReportPage() {
         </div>
 
         <div className="w-full xl:w-1/2">
+          <GasReportForm />
+
           <GasesTable />
         </div>
       </div>
