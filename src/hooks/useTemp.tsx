@@ -29,7 +29,6 @@ export default function useTemp() {
     const client = mqtt.connect("ws://broker.hivemq.com:8000/mqtt");
 
     client.on("connect", () => {
-      console.log("✅ Conectado a MQTT");
       client.subscribe("pepe/esp32/temperatura");
     });
 
@@ -92,5 +91,15 @@ export default function useTemp() {
     queryFn: getAllTemps
   })
 
-  return {chartData, currentTemperature, allTemps, isLoading, isError, error, setPage, totalPages};
+  async function getStats(from: string, to: string){
+    try{
+      const response = await axiosAPI.get(`temperature/stats/?from=${from}&to=${to}`);
+      return response.data;
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  return {chartData, currentTemperature, allTemps, isLoading, isError, error, setPage, totalPages, getStats};
 }

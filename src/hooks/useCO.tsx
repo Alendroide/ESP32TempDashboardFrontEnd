@@ -29,13 +29,11 @@ export default function useCO() {
     const client = mqtt.connect("ws://broker.hivemq.com:8000/mqtt");
 
     client.on("connect", () => {
-      console.log("✅ Conectado a MQTT");
       client.subscribe("pepe/esp32/aire");
     });
 
     client.on("message", (topic, message) => {
       try {
-        console.log(topic);
         const payload = JSON.parse(message.toString());
 
         const co = payload.airQuality;
@@ -63,6 +61,7 @@ export default function useCO() {
             },
           ],
         });
+        return topic;
       } catch (err) {
         console.error("❌ Error al procesar mensaje MQTT", err);
       }
